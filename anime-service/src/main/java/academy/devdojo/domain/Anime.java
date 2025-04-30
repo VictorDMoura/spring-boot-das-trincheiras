@@ -1,25 +1,44 @@
 package academy.devdojo.domain;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
-@AllArgsConstructor
+@Data
+@Builder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Anime {
+
+    @EqualsAndHashCode.Include
     private Long id;
     private String name;
+    private LocalDateTime createdAt;
+
     @Getter
     private static List<Anime> animes = new ArrayList<>();
 
     static {
-        animes.add(new Anime(1L, "Naruto"));
-        animes.add(new Anime(2L, "One Piece"));
-        animes.add(new Anime(3L, "Dragon Ball Z"));
+        var naruto = Anime.builder()
+                .id(1L)
+                .name("Naruto")
+                .createdAt(LocalDateTime.now())
+                .build();
+        var onePiece = Anime.builder()
+                .id(2L)
+                .name("One Piece")
+                .createdAt(LocalDateTime.now())
+                .build();
+        var dragonBallZ = Anime.builder()
+                .id(3L)
+                .name("Dragon Ball Z")
+                .createdAt(LocalDateTime.now())
+                .build();
+        animes.addAll(List.of(naruto, onePiece, dragonBallZ));
     }
 
 }
